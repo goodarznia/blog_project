@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
 
-    Route::get('/', 'Home\\HomeController');
+    Route::get('/', 'Home\\HomeController')->name('home');
 });
 
-
+Route::resource('articles','ArticleController')->except(['index']);

@@ -8,85 +8,60 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+       public function show($id)
+    {
+        return view('article.show',['article'=>Article::findOrFail($id)]);
+    }
+
+    public function list ()
     {
         return view('admin.articles.list', ['articles' => Article::all()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function createForm()
     {
-        return view('article.create');
+        return view('admin.articles.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(ArticleRequest $request)
+    public function createAction(ArticleRequest $request)
     {
         $validateData=$request->validated();
-
-        Article::create([
+        auth()->user()->getArticles()->create([
             'title' => $validateData['title'],
             'body' => $validateData['body'],
         ]);
-        return redirect('/');
+        return redirect('/admin/articles/list');
+    }
+
+    public function modifyForm(Article $article)
+    {
+        return view('admin.articles.edit', ['article' => $article]);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function show($id)
+    public function modifyAction(Article $article, Request $request)
     {
-        return view('article.show',['article'=>Article::find($id)]);
+        $validateData = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+        $article->update([
+            'title' => $validateData['title'],
+            'body' => $validateData['body'],
+        ]);
+        return redirect('/admin/articles/list');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function removeAction(Article $article)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $article->delete();
+        return back();
     }
 }

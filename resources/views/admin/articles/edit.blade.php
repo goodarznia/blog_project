@@ -23,7 +23,7 @@
                     <label for="body" class="form-label">Body:</label>
                     <textarea name="body" class="form-control" placeholder='Enter Body here...'>{{$article->body}}</textarea>
                     <br>
-                    <button class="btn btn-info">Edit</button>
+                    <button class="btn btn-info">Save</button>
                 </form>
             </div>
         </div>

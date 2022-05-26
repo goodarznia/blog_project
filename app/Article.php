@@ -9,7 +9,7 @@ class Article extends Model
 {
     use Sluggable;
 
-    protected $fillable=['title','slug','body'];
+    protected $fillable = ['title', 'slug', 'body'];
 
     public function sluggable(): array
     {
@@ -20,7 +20,8 @@ class Article extends Model
         ];
     }
 
-    public function getUser(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

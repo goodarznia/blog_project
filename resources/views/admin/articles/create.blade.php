@@ -17,8 +17,8 @@
                 @endif
                 <form action="{{ route('create_action_article') }}" method="post">
                     @csrf
-                    <label for="title" class="form-label" placeholder='Enter Title here...'>Title:</label>
-                    <input type="text" name="title" class="form-control">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" name="title" class="form-control" placeholder='Enter Title here...'>
                     <label for="body" class="form-label">Body:</label>
                     <textarea name="body" class="form-control" placeholder='Enter Body here...'></textarea>
                     <br>

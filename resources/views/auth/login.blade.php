@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+    <div><br></div>
     <div class="col-lg">
         <div class="card mb-4">
             <div class="card-header">{{ __('Login') }}</div>
